@@ -15,11 +15,11 @@ include 'components/home/testimonials.php';
 include 'components/home/video-testimonials.php';
 include 'components/home/work-process.php';
 include 'components/home/why-choose-us.php';
-// include 'components/home/recent-projects.php';
+include 'components/home/recent-projects.php';
 include 'components/home/our-services.php';
 include 'components/home/our-team.php';
 include 'components/home/our-skill.php';
-// include 'components/home/blog-section.php';
+include 'components/home/blog-section.php';
 include 'components/home/faqs.php';
 ?>
 

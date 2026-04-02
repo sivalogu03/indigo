@@ -1,39 +1,39 @@
 <?php
-// Handle form submission
+// Handle form submission - static version (no database)
 $cmt_msg = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_comment'])) {
-    
-    $blog_id = intval($_POST['blog_id']);
-    $name = $conn->real_escape_string($_POST['name']);
-    $email = $conn->real_escape_string($_POST['email']);
-    $comment = $conn->real_escape_string($_POST['comment']);
-
-    // Insert as unapproved (is_approved = 0 default)
-    $stmt = $conn->prepare("INSERT INTO blog_comments (blog_id, name, email, comment) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("isss", $blog_id, $name, $email, $comment);
-    
-    if ($stmt->execute()) {
-        $cmt_msg = "<div class='alert alert-success mt-4'>Thank you! Your comment is awaiting moderation before it goes live.</div>";
-    } else {
-        $cmt_msg = "<div class='alert alert-danger mt-4'>Sorry, there was an error submitting your comment.</div>";
-    }
-    $stmt->close();
+    $cmt_msg = "<div class='alert alert-success mt-4'>Thank you! Your comment has been received. We appreciate your feedback!</div>";
 }
 ?>
 
 <div class="blog-comments mt-5">
     <h3 class="fw-bold mb-4 font-outfit border-bottom pb-2">Discussion Thread</h3>
     
-    <!-- Render Approved Comments -->
+    <!-- Render Sample Comments -->
     <div class="comments-list mb-5">
         <?php
-        $cid = $blog['id'];
-        $fetch_cmts = "SELECT * FROM blog_comments WHERE blog_id = $cid AND is_approved = 1 ORDER BY created_at ASC";
-        $cmts_res = $conn->query($fetch_cmts);
+        // Static sample comments
+        $sample_comments = [
+            [
+                'name' => 'Sarah Johnson',
+                'date' => '2026-04-05 10:30:00',
+                'comment' => 'This article is incredibly helpful! I especially loved the tips on furniture arrangement. My living room looks completely transformed now. Thank you for sharing such valuable insights!'
+            ],
+            [
+                'name' => 'Michael Chen',
+                'date' => '2026-04-03 14:15:00',
+                'comment' => 'Great breakdown of color psychology. I didn\'t realize how much the color palette affects my mood and productivity. Implementing these tips in my home office.'
+            ],
+            [
+                'name' => 'Emma Wilson',
+                'date' => '2026-04-02 09:45:00',
+                'comment' => 'Perfect timing! I\'m redesigning my apartment and this gives me exactly the guidance I needed. Can\'t wait to see the difference!'
+            ]
+        ];
         
-        if ($cmts_res->num_rows > 0) {
-            while($c = $cmts_res->fetch_assoc()) {
-                $cdate = date('F j, Y \a\t g:i A', strtotime($c['created_at']));
+        if (!empty($sample_comments)) {
+            foreach($sample_comments as $c) {
+                $cdate = date('F j, Y \a\t g:i A', strtotime($c['date']));
                 $avatar_letter = strtoupper(substr($c['name'], 0, 1));
                 
                 echo '
@@ -78,6 +78,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_comment'])) {
                 </div>
                 <div class="col-12 mt-4">
                     <button type="submit" name="submit_comment" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow-sm">Post Comment</button>
+                </div>
+            </div>
+        </form>
+        <?php echo $cmt_msg; ?>
+    </div>
+</div>
                 </div>
             </div>
         </form>

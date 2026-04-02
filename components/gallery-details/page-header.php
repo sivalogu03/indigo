@@ -1,17 +1,19 @@
-<div class="page-project-header mt-5 mb-5">
+<div class="page-header parallaxie" style="background-image: url('assets/images/gallery-banner.jpg')" alt="Indigo Interiors Gallery">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-8" style="max-width: 800px;">
-                <div class="bg-light p-4 text-center">
-                    <h1>Living Room Interiors</h1>
-                    <p>
-                        <strong>
-                            Transform your home with Indigo Interiors’ stunning Living Room Interior Designs. 
-                            Explore our gallery to discover modern, elegant, and functional living spaces crafted 
-                            to reflect your style. From luxurious sofas to tasteful décor, find inspiration to 
-                            elevate your living room into a warm, inviting haven for family and friends.
-                        </strong>
-                    </p>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-header-box">
+                    <h1 class="text-anime-style-2" data-cursor="-opaque">Gallery Details</h1>
+                    <nav class="wow fadeInUp">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="index.php" class="text-decoration-none">Home</a>
+                                <span class="mx-2">/</span>
+                                <a href="gallery.php" class="text-decoration-none">Gallery</a>
+                                <span class="mx-2">/</span> Design
+                            </li>
+                        </ol>
+                    </nav>
                 </div>
             </div>
         </div>

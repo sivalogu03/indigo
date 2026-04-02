@@ -1,15 +1,26 @@
 <?php
-// 1. Define page-specific variables
-$page_title = "Indigo Interiors | Interior Design Gallery Bangalore";
-$page_desc = "Explore Indigo Interiors’ gallery showcasing stunning home and office designs across Bangalore. Modern, elegant, and customized spaces.";
-
-// 2. Include the Header
+$page_title = "Senior Interior Designer | Job Details - Indigo Interiors";
+$page_desc = "Explore exciting career opportunities at Indigo Interiors. Apply for Senior Interior Designer position today.";
 include 'includes/header.php';
 ?>
 
-<?php
-include 'components/careers-details/page-header.php';
-?>
+<!-- Page Header -->
+<?php include 'components/careers-details/page-header.php'; ?>
+
+<!-- Job Details -->
+<?php include 'components/careers-details/job-details.php'; ?>
+
+<!-- Job Benefits -->
+<?php include 'components/careers-details/job-benefits.php'; ?>
+
+<!-- Application Form -->
+<?php include 'components/careers-details/application-form.php'; ?>
+
+<!-- Similar Jobs -->
+<?php include 'components/careers-details/similar-jobs.php'; ?>
+
+<!-- CTA Section -->
+<?php include 'components/service-detailes/cta-section.php'; ?>
 
 <?php include 'includes/footer.php'; ?>
 

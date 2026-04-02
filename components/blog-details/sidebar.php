@@ -17,13 +17,16 @@
             <h5 class="font-outfit fw-bold mb-3 border-bottom pb-2">Categories</h5>
             <ul class="list-unstyled mb-0">
                 <?php
-                $cat_q = $conn->query("SELECT * FROM categories ORDER BY name ASC");
-                if ($cat_q->num_rows > 0) {
-                    while($c = $cat_q->fetch_assoc()) {
-                        echo '<li class="mb-2"><a href="blog.php?category='.$c['id'].'" class="text-decoration-none text-secondary d-flex justify-content-between align-items-center"><span><i class="fas fa-angle-right me-2 text-primary"></i>'.htmlspecialchars($c['name']).'</span></a></li>';
-                    }
-                } else {
-                    echo '<li class="text-muted">No categories found.</li>';
+                $categories = [
+                    ['id' => 1, 'name' => 'Design Tips'],
+                    ['id' => 2, 'name' => 'Trends'],
+                    ['id' => 3, 'name' => 'Solutions'],
+                    ['id' => 4, 'name' => 'Styles'],
+                    ['id' => 5, 'name' => 'Eco-Friendly']
+                ];
+                
+                foreach ($categories as $c) {
+                    echo '<li class="mb-2"><a href="blog.php?category='.$c['id'].'" class="text-decoration-none text-secondary d-flex justify-content-between align-items-center"><span><i class="fas fa-angle-right me-2 text-primary"></i>'.htmlspecialchars($c['name']).'</span></a></li>';
                 }
                 ?>
             </ul>
@@ -37,17 +40,28 @@
             <div class="recent-posts-list">
                 <?php
                 $current_id = isset($blog['id']) ? (int)$blog['id'] : 0;
-                $rec_q = $conn->query("SELECT title, slug, upload_image, publish_date FROM blogs WHERE published_status='published' AND id != $current_id ORDER BY publish_date DESC LIMIT 3");
+                $recent = [];
                 
-                if ($rec_q->num_rows > 0) {
-                    while($r = $rec_q->fetch_assoc()) {
-                        $thumb = !empty($r['upload_image']) ? 'assets/images/blogs/'.$r['upload_image'] : 'assets/images/placeholder.jpg';
+                foreach ($all_blogs as $b) {
+                    if ($b['id'] != $current_id) {
+                        $recent[] = $b;
+                    }
+                }
+                
+                usort($recent, function($a, $b) {
+                    return strtotime($b['publish_date']) - strtotime($a['publish_date']);
+                });
+                
+                $recent = array_slice($recent, 0, 3);
+                
+                if (!empty($recent)) {
+                    foreach ($recent as $r) {
                         $rdate = date('M d, Y', strtotime($r['publish_date']));
                         echo '
                         <div class="d-flex mb-3 align-items-center">
-                            <img src="'.$thumb.'" alt="thumb" class="rounded-3 me-3" style="width: 70px; height: 70px; object-fit: cover;">
+                            <img src="assets/images/blogs/'.$r['image'].'" alt="thumb" class="rounded-3 me-3" style="width: 70px; height: 70px; object-fit: cover;">
                             <div>
-                                <h6 class="mb-1 lh-sm"><a href="blog-details.php?slug='.htmlspecialchars($r['slug']).'" class="text-dark text-decoration-none fw-bold" style="font-size: 0.95rem;">'.htmlspecialchars($r['title']).'</a></h6>
+                                <h6 class="mb-1 lh-sm"><a href="blog-details.php?id='.$r['id'].'" class="text-dark text-decoration-none fw-bold" style="font-size: 0.95rem;">'.htmlspecialchars($r['title']).'</a></h6>
                                 <small class="text-muted">'.$rdate.'</small>
                             </div>
                         </div>';

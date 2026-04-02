@@ -1,21 +1,43 @@
 <?php
-// Dynamically fetch related services from the database based on Category Name matching
-$related_services = [];
-if (!empty($blog['category_name'])) {
-    $cat_name = $conn->real_escape_string($blog['category_name']);
-    
-    // Find services in a category with the same name as the blog category
-    $rel_service_sql = "SELECT s.title, s.slug, s.intro_image, sc.name as cat_name 
-                         FROM services s 
-                         JOIN service_categories sc ON s.category_id = sc.id 
-                         WHERE sc.name = '$cat_name' AND s.published_status = 'published' 
-                         ORDER BY s.id DESC LIMIT 6";
-    
-    $rel_res = $conn->query($rel_service_sql);
-    while($rs = $rel_res->fetch_assoc()) {
-        $related_services[] = $rs;
-    }
-}
+// Static related services data
+$related_services = [
+    [
+        'title' => 'Interior Design Consultation',
+        'slug' => 'interior-design-consultation',
+        'intro_image' => 'service-1.jpg',
+        'cat_name' => 'Design'
+    ],
+    [
+        'title' => 'Space Planning & Layout Design',
+        'slug' => 'space-planning',
+        'intro_image' => 'service-2.jpg',
+        'cat_name' => 'Design'
+    ],
+    [
+        'title' => 'Color & Material Selection',
+        'slug' => 'color-material-selection',
+        'intro_image' => 'service-3.jpg',
+        'cat_name' => 'Design'
+    ],
+    [
+        'title' => 'Lighting Design Solutions',
+        'slug' => 'lighting-design',
+        'intro_image' => 'service-4.jpg',
+        'cat_name' => 'Design'
+    ],
+    [
+        'title' => 'Furniture & Decor Styling',
+        'slug' => 'furniture-styling',
+        'intro_image' => 'service-5.jpg',
+        'cat_name' => 'Styling'
+    ],
+    [
+        'title' => 'Renovation & Remodeling',
+        'slug' => 'renovation-remodeling',
+        'intro_image' => 'service-6.jpg',
+        'cat_name' => 'Renovation'
+    ]
+];
 
 if (!empty($related_services)):
 ?>
@@ -55,7 +77,7 @@ if (!empty($related_services)):
                             <h5 class="card-title fw-bold font-outfit mb-3 lh-sm text-dark">
                                 <?php echo htmlspecialchars($rs['title']); ?>
                             </h5>
-                            <a href="service-details.php?slug=<?php echo htmlspecialchars($rs['slug']); ?>" class="btn btn-outline-primary rounded-pill btn-sm py-2 px-4 fw-bold mt-auto stretched-link">
+                            <a href="service-details.php?id=<?php echo htmlspecialchars($rs['slug']); ?>" class="btn btn-outline-primary rounded-pill btn-sm py-2 px-4 fw-bold mt-auto stretched-link">
                                 Explore Service <i class="fas fa-arrow-right ms-2 transition-arrow"></i>
                             </a>
                         </div>
